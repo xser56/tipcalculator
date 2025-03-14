@@ -1,7 +1,7 @@
 import React from "react";
 import "../App.css";
-// import dollarSymbol from "../assets/images/icon-dollar.svg";
-// import personIcon from "../assets/images/icon-person.svg";
+import dollarSymbol from "../assets/icon-dollar.svg";
+import personIcon from "../assets/icon-person.svg";
 import TipSelection from "./SelectTip"; // Import TipSelection component for grid 
 
 const UserInputs = ({ bill, setBill, numPeople, setNumPeople, warningText, tipPercentage, handleTipSelection, customTip, handleCustomTip }) => {
@@ -12,7 +12,7 @@ const UserInputs = ({ bill, setBill, numPeople, setNumPeople, warningText, tipPe
             <div>
                 <label className=" font-bold text-neutral-dark-grayish-cyan mb-2 ">Bill</label>
                 <div className="bg-neutral-light-grayish-cyan mt-2 w-full h-[2.5rem] rounded-[5px] flex items-center justify-between px-2 appearance-none">
-                    {/* <img src={dollarSymbol} className="pl-[8px]" alt="dollar icon" /> */}
+                    <img src={dollarSymbol} className="pl-[8px]" alt="dollar icon" />
                     <input
                         placeholder="0"
                         min={0}
@@ -38,7 +38,7 @@ const UserInputs = ({ bill, setBill, numPeople, setNumPeople, warningText, tipPe
                     Number of People <div className="text-red-500 text-sm pt-1 md:pt-0">{warningText}</div>
                 </label>
                 <div className="bg-neutral-light-grayish-cyan mt-2 w-full h-[2.5rem] rounded-[5px] flex items-center justify-between px-2">
-                    {/* <img src={personIcon} className="pl-[8px]" alt="person icon" /> */}
+                    <img src={personIcon} className="pl-[8px]" alt="person icon" />
                     <input
                         placeholder="0"
                         min={0}
