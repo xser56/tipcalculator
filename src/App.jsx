@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserInputs from "./Components/UserInput";
+import Logo from "./assets/logo.svg";
 
 function TipCalculator() {
     const [bill, setBill] = useState(0);
@@ -47,11 +48,9 @@ function TipCalculator() {
     };
 
     return (
-        <div className=" font-mono flex flex-col justify-center items-center w-full h-screen bg-[hsl(185,41%,84%)] font-bold text-sm">
-          <div>
-            <header className="flex justify-center sm:pt-[1rem] mt-[2rem] font-bold text-neutral-dark-grayish-cyan text-[24px] ">S P L I</header>
-            <header className="flex justify-center  mb-[5rem] font-bold text-neutral-dark-grayish-cyan text-[24px] ">T T E R</header>
-          </div>
+      <div>
+        <div className=" font-spaceMono flex flex-col justify-center items-center w-full h-screen bg-[hsl(185,41%,84%)] font-bold ">
+          <img src={Logo} alt="Logo" className="mb-20"/>
             
 
             {/* Card Container */}
@@ -75,13 +74,13 @@ function TipCalculator() {
                     </div>
 
                     {/* Right side */}
-                    <div className="bg-neutral-very-dark-cyan px-8 pt-10 rounded-xl m-4 sm:h-[21rem] h-[17rem]">
+                    <div className="bg-neutral-very-dark-cyan px-8 pt-10 rounded-xl m-4 sm:h-[22rem] h-[17rem]">
                       
                         {/* Tip Amount */}
                         <div className="grid grid-cols-2 bg-neutral-very-dark-cyan rounded-x">  
                             <div>
-                                <p className="text-white font-bold text-[14px]">Tip Amount</p>
-                                <p className="text-neutral-grayish-cyan">/ person</p>
+                                <p className="text-white text-[14px]">Tip Amount</p>
+                                <p className="text-neutral-grayish-cyan text-[12px]">/ person</p>
                             </div>
                             <p className="text-primary-cyan font-bold flex justify-end text-4xl">${(calculateTipAmount() / numPeople || 0).toFixed(2)}</p>
                         </div>
@@ -89,8 +88,8 @@ function TipCalculator() {
                         {/* Total */}
                         <div className="flex justify-between items-center pt-10 pb-5">
                             <div>
-                                <p className="text-white font-bold text-[14x]">Total</p>
-                                <p className="text-neutral-grayish-cyan">/ person</p>
+                                <p className="text-white text-[14px]">Total</p>
+                                <p className="text-neutral-grayish-cyan text-[12px]">/ person</p>
                             </div>
                             <p className="text-primary-cyan font-bold flex justify-end text-4xl ">${calculateTotalPerPerson().toFixed(2)}</p>
                         </div>
@@ -101,6 +100,7 @@ function TipCalculator() {
                 </div>
             </div>
         </div>
+      </div>
     );
 }
 
