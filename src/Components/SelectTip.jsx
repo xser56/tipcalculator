@@ -4,12 +4,13 @@ const TipSelection = ({ tipPercentage, handleTipSelection, customTip, handleCust
 
     return (
         <div>
-            <label className="block text-[hsl(186,14%,43%)] mb-2">Select Tip %</label>
-            <div className="grid grid-cols-3 grid-rows-2 gap-4 mt-4">
+            <span className="block text-[hsl(186,14%,43%)] mb-1">Select Tip %</span>
+            <div className="grid sm:grid-cols-3 sm:grid-rows-2 grid-cols-2 grid-row-3 gap-4 mt-4">
                 {[5, 10, 15, 25, 50].map((tip) => ( // Tip arr for component
                     <button
                         key={tip}
-                        className={`text-[hsl(0,0%,100%)] text-lg py-2 px-0 h-[44px] rounded-lg transition-all ${
+                        className={`text-white text-lg py-2 px-0 h-[44px] rounded-lg transition-all 
+                        ${
                             tipPercentage === tip / 100
                                 ? "bg-[hsl(172,67%,45%)] text-[hsl(183,100%,15%)]"
                                 : "bg-[hsl(183,100%,15%)] hover:text-[hsl(183,100%,15%)] hover:bg-[hsl(172,67%,60%)]"
@@ -21,7 +22,7 @@ const TipSelection = ({ tipPercentage, handleTipSelection, customTip, handleCust
                 ))}
 
                 {/* Custom Tip */}
-                <div className="bg-[hsl(189,41%,97%)] w-full h-[44px] rounded-[5px] flex items-center justify-between focus-within:border-[hsl(172,67%,45%)] border-2 border-transparent">
+                <div className="bg-gray-200 w-full h-[44px] rounded-[5px] flex items-center justify-between focus-within:border-[hsl(172,67%,45%)] border-2 border-transparent">
                     <input
                         type="number"
                         min={0}
