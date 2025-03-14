@@ -1,108 +1,102 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import SelectTip from "./Components/SelectTip";
-import { Card } from "flowbite-react";
-import Form from "./Components/Form";
+import React, { useState, useEffect } from "react";
+import UserInputs from "./Components/Form";
 
-function App() {
-  const [tipArr, setTipArr] = useState([])
+function TipCalculator() {
+    const [bill, setBill] = useState(0);
+    const [tipPercentage, setTipPercentage] = useState(0);
+    const [numPeople, setNumPeople] = useState();
+    const [customTip, setCustomTip] = useState("");
+    const [warningText, setWarningText] = useState("");
 
-//   useEffect (() => 
-//   {
-//     setTipArr[5, 10, 15, 25, 50]
-//   })
+    const handleTipSelection = (percentage) => {
+        setTipPercentage(percentage);
+        setCustomTip(""); // Clear custom tip when another tip is selected
+    };
 
-  useEffect(() => 
-  {
-    setTipArr([5, 10, 15, 25, 50, "Custom"]);
-  }, []);
+    const handleCustomTip = (e) => {
+        const value = e.target.value;
+        setCustomTip(value);
+        setTipPercentage(value === "" ? 0 : parseFloat(value) / 100);
+    };
 
-// <div className='grid grid-cols-3 grid-rows-2 gap-y-4'>
-//           <SelectTip/>
-//           <SelectTip/>
-//           <SelectTip/>
-//           <SelectTip/>
-//           <SelectTip/>
-//           <SelectTip/>
-//         </div>
+    useEffect(() => {
+        if (!numPeople || numPeople <= 0) {
+            setWarningText("Can't be zero");
+        } else {
+            setWarningText("");
+        }
+    }, [numPeople]);
 
-{/* <div className="grid grid-cols-3 grid-rows-2 gap-y-4">
-{tipArr.map((tip, index) => (
-  <SelectTip key={index} value={tip} />
-))}
-</div> */}
+    const calculateTipAmount = () => {
+        return bill * tipPercentage;
+    };
 
-  return (
-    <>
-      <body className="font-spaceMono bg-neutral-light-grayish-cyan">
+    const calculateTotalPerPerson = () => {
+        const peopleCount = parseInt(numPeople, 10) || 0;
+        if (peopleCount <= 0) return 0;
 
-        <header className="flex justify-center pt-[5rem] font-bold text-neutral-dark-grayish-cyan text-[24px] ">S P L I</header>
-        <header className="flex justify-center pb-20 font-bold text-neutral-dark-grayish-cyan text-[24px] ">T T E R</header>
+        return (bill + calculateTipAmount()) / peopleCount;
+    };
 
-    <div className="flex justify-center">
-    <Card className="rounded-xl w-full max-w-[900px] p-1">
-      <div className="grid grid-cols-2 ">
+    const resetCalculator = () => {
+        setBill(0);
+        setTipPercentage(0);
+        setNumPeople(0);
+        setCustomTip("");
+        setWarningText("");
+    };
 
-      {/* Left Side */}
-      <div>
-        <h5 className="text-xl tracking-tight text-neutral-dark-grayish-cyan font-bold font-spaceMono">
-          Bill
-        </h5>
-          <Form />
-        <p className="font-bold text-neutral-dark-grayish-cyan text-[16px] pt-6 pb-3">
-          Select Tip %
-        </p>
+    return (
+        <div className=" font-mono flex flex-col justify-center items-center w-full h-screen bg-[hsl(185,41%,84%)] font-bold text-sm">
+            <header className="flex justify-center pt-[1rem] font-bold text-neutral-dark-grayish-cyan text-[24px] ">S P L I</header>
+            <header className="flex justify-center pb-20 font-bold text-neutral-dark-grayish-cyan text-[24px] ">T T E R</header>
 
-        <div className="grid grid-cols-3 grid-rows-2 gap-y-4">
-      {tipArr.map((tipArr, index) => 
-      (
-        <SelectTip key={index} value={tipArr} />
-      ))}
-    </div>
+            {/* Card Container */}
+            <div className="rounded-2xl w-[800px] p-1 bg-white">
+                <div className="grid grid-cols-2">
+                    
+                    {/* Left side */}
+                    <div className="py-1">
+                        <UserInputs 
+                            bill={bill} 
+                            setBill={setBill} 
+                            numPeople={numPeople} 
+                            setNumPeople={setNumPeople} 
+                            warningText={warningText} 
+                            tipPercentage={tipPercentage} 
+                            handleTipSelection={handleTipSelection} 
+                            customTip={customTip} 
+                            handleCustomTip={handleCustomTip} 
+                        />
+                    </div>
 
-          <h5 className="text-1xl tracking-tight text-neutral-dark-grayish-cyan font-bold pt-8 pb-1">
-          Number of People 
-        </h5>
-          <Form />
-      </div>
+                    {/* Right side */}
+                    <div className="bg-neutral-very-dark-cyan px-10 pt-12 rounded-xl m-5">
+                        <div className="grid grid-cols-2 bg-neutral-very-dark-cyan rounded-x">  
+                            {/* Tip Amount */}
+                            <div>
+                                <p className="text-white font-bold text-[14px]">Tip Amount</p>
+                                <p className="text-neutral-grayish-cyan">/ person</p>
+                            </div>
+                            <p className="text-primary-cyan font-bold flex justify-end text-5xl">${(calculateTipAmount() / numPeople || 0).toFixed(2)}</p>
+                        </div>
+                    
+                        {/* Total */}
+                        <div className="flex justify-between items-center pt-12">
+                            <div>
+                                <p className="text-white font-bold text-[14x]">Total</p>
+                                <p className="text-neutral-grayish-cyan">/ person</p>
+                            </div>
+                            <p className="text-primary-cyan font-bold flex justify-end text-5xl ">${calculateTotalPerPerson().toFixed(2)}</p>
+                        </div>
 
-      {/* Right Side */}
-      <div className="grid grid-cols-2 bg-neutral-very-dark-cyan px-10 pt-12 rounded-xl">
-
-      <div className="bg-neutral-very-dark-cyan rounded-lg">
-        <div className="text-white font-bold text-[16px] pb-10">
-          Tip Amount
-          <p className="text-neutral-grayish-cyan">/ person</p>
-        </div>
-        <div className="text-white font-bold mt-4 text-[16px]">
-          Total
-          <p className="text-neutral-grayish-cyan">/ person</p>
-        </div>
-      </div>
-
-      <div className="bg-neutral-very-dark-cyan rounded-lg">
-        <div className="text-primary-cyan font-bold flex justify-end text-5xl pb-10">
-          $4.27     
-        </div>
-        <div className="text-primary-cyan font-bold mt-4 flex justify-end text-5xl">
-          $32.79
-        </div>
-      </div>
-
-      <div className="flex justify-center items-center">
-        <button className="bg-primary-cyan text-neutral-very-dark-cyan rounded-md w-[20rem] h-10 font-bold">
-          RESET
-        </button>
-      </div>
-      
-      </div>
+                        {/* Reset Button */}
+                        <button onClick={resetCalculator} className="bg-primary-cyan text-neutral-very-dark-cyan rounded-md h-[40px] text-lg font-bold mt-16 flex items-center justify-center w-[17rem]">RESET</button>
+                    </div>
+                </div>
             </div>
-
-    </Card>
-</div>
-      </body>
-    </>
-  );
+        </div>
+    );
 }
 
-export default App;
+export default TipCalculator;

@@ -1,17 +1,39 @@
-import React from 'react'
+import React from "react";
 
-const SelectTip = ({tip}) => {
+const TipSelection = ({ tipPercentage, handleTipSelection, customTip, handleCustomTip }) => {
 
-  
-  return (
-    <div className=" text-[24px] font-bold font-spaceMono">
-    
-      <div className='text-neutral-very-light-grayish-cyan bg-neutral-very-dark-cyan w-[8rem] h-12 flex items-center justify-center rounded-md hover:bg-neutral-light-grayish-cyan'>
-        {tip}%
-      </div>
-       </div>
-   
-  )
-}
+    return (
+        <div>
+            <label className="block text-[hsl(186,14%,43%)] mb-2">Select Tip %</label>
+            <div className="grid grid-cols-3 grid-rows-2 gap-4 mt-4">
+                {[5, 10, 15, 25, 50].map((tip) => ( // Tip arr for component
+                    <button
+                        key={tip}
+                        className={`text-[hsl(0,0%,100%)] text-lg py-2 px-0 h-[44px] rounded-lg transition-all ${
+                            tipPercentage === tip / 100
+                                ? "bg-[hsl(172,67%,45%)] text-[hsl(183,100%,15%)]"
+                                : "bg-[hsl(183,100%,15%)] hover:text-[hsl(183,100%,15%)] hover:bg-[hsl(172,67%,60%)]"
+                        }`}
+                        onClick={() => handleTipSelection(tip / 100)}
+                    >
+                        {tip}%
+                    </button>
+                ))}
 
-export default SelectTip
+                {/* Custom Tip */}
+                <div className="bg-[hsl(189,41%,97%)] w-full h-[44px] rounded-[5px] flex items-center justify-between focus-within:border-[hsl(172,67%,45%)] border-2 border-transparent">
+                    <input
+                        type="number"
+                        min={0}
+                        placeholder="Custom"
+                        className="w-full bg-transparent border-none outline-none p-2 rounded-lg appearance-none h-[44px] text-center md:text-right focus:outline-none focus:ring-0 active:outline-none active:ring-0 placeholder:text-center"
+                        value={customTip || ""}
+                        onChange={handleCustomTip}
+                    />
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default TipSelection;
